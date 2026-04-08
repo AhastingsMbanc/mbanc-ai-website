@@ -8,7 +8,8 @@ services:
       - "127.0.0.1:8070:5070"
     environment:
       - FLASK_ENV=${FLASK_ENV:-development}
-      - SECRET_KEY=${SECRET_KEY:-mbanc-auth-dev-key}
+      - SECRET_KEY=mbanc-auth-dev-key
+      - SESSION_COOKIE_DOMAIN=.mbanc.ai
       - AUTH_URL=https://auth.mbanc.ai
       - AUTH_INTERNAL_URL=http://mbanc-auth:5060
       - DASHBOARD_URL=https://mbanc.ai
