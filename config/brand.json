@@ -1,0 +1,56 @@
+{
+  "brand": {
+    "name": "Mbanc",
+    "full_name": "Mortgage Bank of California",
+    "slogan": "America's Number One Consumer Direct Non-QM Home Lender",
+    "domain": "mbanc.ai"
+  },
+
+  "colors": {
+    "navy":       "#091638",
+    "navy_mid":   "#003366",
+    "red":        "#FF3300",
+    "light_gray": "#E9EEEE",
+    "sage":       "#949C84",
+    "white":      "#FFFFFF",
+    "black":      "#000000",
+    "lime":       "#D0FD7A"
+  },
+
+  "theme": {
+    "bg_deep":        "#050d20",
+    "bg_primary":     "#091638",
+    "bg_secondary":   "#0d1f4a",
+    "bg_tertiary":    "#1a2d5a",
+    "bg_card":        "rgba(13, 31, 74, 0.85)",
+    "bg_card_hover":  "rgba(18, 40, 90, 0.95)",
+    "border_dim":     "rgba(42, 63, 110, 0.5)",
+    "border_glow":    "rgba(0, 51, 102, 0.5)",
+    "text_primary":   "#e2e8f0",
+    "text_secondary": "#c8d4e6",
+    "text_tertiary":  "#7e90b0",
+    "text_dim":       "#506080",
+    "accent":         "#FF3300",
+    "accent_dark":    "#cc2900",
+    "accent_light":   "#ff5c33",
+    "accent_glow":    "rgba(255, 51, 0, 0.3)",
+    "success":        "#22c55e",
+    "success_glow":   "rgba(34, 197, 94, 0.4)",
+    "danger":         "#ef4444",
+    "warning":        "#f59e0b",
+    "ring":           "rgba(0, 51, 102, 0.3)"
+  },
+
+  "logos": {
+    "icon":     "mbanc-m.png",
+    "wordmark": "mbanc-logo.png",
+    "favicon":  "favicon.png"
+  },
+
+  "typography": {
+    "brand_font": "Loos Normal",
+    "heading_font": "Inter",
+    "mono_font": "JetBrains Mono",
+    "system_stack": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+  }
+}

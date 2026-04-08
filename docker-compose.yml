@@ -1,0 +1,25 @@
+services:
+  mbanc-dashboard:
+    build: .
+    container_name: mbanc-dashboard
+    networks:
+      - mbanc-net
+    ports:
+      - "127.0.0.1:8070:5070"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - SECRET_KEY=${SECRET_KEY:-mbanc-auth-dev-key}
+      - AUTH_URL=https://auth.mbanc.ai
+      - AUTH_INTERNAL_URL=http://mbanc-auth:5060
+      - DASHBOARD_URL=https://mbanc.ai
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5070/api/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  mbanc-net:
+    external: true
