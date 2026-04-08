@@ -73,22 +73,29 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
 
-  /* ═══ HUD ═══ */
+  /* ═══ UNIFIED HOLOGRAPHIC TOP BAR ═══ */
   .hud {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
-    padding: 20px 36px;
+    height: 54px;
+    padding: 0 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     pointer-events: none;
-    background: linear-gradient(180deg, rgba(9, 22, 56, 0.8) 0%, transparent 100%);
-    backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, rgba(9, 22, 56, 0.7) 0%, rgba(9, 22, 56, 0.25) 75%, transparent 100%);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    animation: hdrIn 0.6s ease forwards;
   }
   .hud > * { pointer-events: auto; }
+  @keyframes hdrIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
   .logo {
     display: flex;
@@ -96,14 +103,22 @@
     gap: 10px;
   }
   .logo-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
     object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(9, 22, 56, 0.4);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .logo:hover .logo-icon {
+    border-color: rgba(255, 51, 0, 0.5);
+    box-shadow: 0 0 16px rgba(255, 51, 0, 0.25);
+    transform: scale(1.05);
   }
   .logo-text {
     font-family: "Montserrat", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
     color: var(--ink);
     letter-spacing: -0.5px;
@@ -118,14 +133,16 @@
     align-items: center;
     gap: 20px;
     font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    color: var(--ink-3);
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-weight: 500;
+    opacity: 0;
+    animation: hdrIn 0.4s 0.2s ease forwards;
   }
-  .hud-center .sep { color: var(--ink-4); }
-  .hud-center b { color: var(--ink); font-weight: 500; }
+  .hud-center .sep { color: rgba(255, 255, 255, 0.1); }
+  .hud-center b { color: rgba(255, 255, 255, 0.6); font-weight: 500; }
   .hud-center .live {
     display: flex;
     align-items: center;
@@ -133,8 +150,8 @@
     color: var(--success);
   }
   .hud-center .live .dot {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--success);
     box-shadow: 0 0 8px var(--success);
@@ -142,7 +159,7 @@
   }
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    50% { opacity: 0.3; }
   }
 
   .hud-right {
@@ -150,46 +167,60 @@
     align-items: center;
     gap: 14px;
     font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    color: var(--ink-3);
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-weight: 500;
+    opacity: 0;
+    animation: hdrIn 0.4s 0.3s ease forwards;
   }
   .hud-right .op b { color: var(--red-2); font-weight: 500; }
   .avatar {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
-    background: var(--navy-3);
-    border: 1px solid var(--red-dim);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 51, 0, 0.2);
     color: var(--red-2);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
+    transition: all 0.25s;
+  }
+  .avatar:hover {
+    border-color: rgba(255, 51, 0, 0.5);
+    box-shadow: 0 0 12px rgba(255, 51, 0, 0.2);
   }
   .logout-link {
     font-family: "JetBrains Mono", monospace;
-    font-size: 9px;
+    font-size: 8px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--ink-3);
+    color: rgba(255, 255, 255, 0.25);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.25s;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
   }
-  .logout-link:hover { color: var(--red); }
+  .logout-link:hover {
+    color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
 
   /* ═══ CONSOLE ═══ */
+  html, body { height: 100%; overflow: hidden; }
   .console {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 100px 40px 40px;
+    padding: 60px 40px 20px;
     position: relative;
     z-index: 2;
   }
@@ -200,7 +231,7 @@
     color: var(--ink-3);
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -220,8 +251,8 @@
   /* Ring container */
   .ring-container {
     position: relative;
-    width: 700px;
-    height: 700px;
+    width: min(780px, 90vh);
+    height: min(780px, 90vh);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,8 +283,8 @@
   .core {
     position: relative;
     z-index: 10;
-    width: 300px;
-    height: 300px;
+    width: 340px;
+    height: 340px;
     border-radius: 50%;
     background: rgba(9, 22, 56, 0.5);
     backdrop-filter: blur(20px);
@@ -374,7 +405,7 @@
     z-index: 5;
     cursor: pointer;
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --radius: 290px;
+    --radius: 260px;
     transform:
       translate(-50%, -50%)
       rotate(var(--angle))
@@ -476,7 +507,7 @@
 
   /* ═══ COMMAND BAR ═══ */
   .cmdbar {
-    margin-top: 44px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -522,7 +553,7 @@
   /* ═══ FOOTER ═══ */
   .foot {
     text-align: center;
-    padding: 40px 20px 30px;
+    padding: 10px 20px 10px;
     font-family: "JetBrains Mono", monospace;
     font-size: 9px;
     color: var(--ink-4);
@@ -1056,13 +1087,13 @@
 
   // ═══ SPOKES ═══
   const spokesSvg = document.querySelector('.spokes');
-  const cx = 350, cy = 350, nr = 290;
+  const cx = 350, cy = 350, nr = 260;
   [-90, -18, 54, 126, 198].forEach(angle => {
     const rad = (angle * Math.PI) / 180;
     const x2 = cx + nr * Math.cos(rad);
     const y2 = cy + nr * Math.sin(rad);
-    const x1 = cx + 152 * Math.cos(rad);
-    const y1 = cy + 152 * Math.sin(rad);
+    const x1 = cx + 172 * Math.cos(rad);
+    const y1 = cy + 172 * Math.sin(rad);
     spokesSvg.innerHTML += '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="rgba(255,51,0,0.18)" stroke-width="1" stroke-dasharray="3 4"/>';
   });
 
