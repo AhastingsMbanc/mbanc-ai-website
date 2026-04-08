@@ -182,6 +182,8 @@
     font-weight: 500;
     opacity: 0;
     animation: fadeIn 1s 0.2s forwards;
+    position: relative;
+    z-index: 30;
   }
   .console-label::before,
   .console-label::after {
@@ -233,11 +235,13 @@
     background: rgba(9, 22, 56, 0.5);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 51, 0, 0.2);
+    border: 1px solid rgba(255, 51, 0, 0.35);
     box-shadow:
-      0 0 80px rgba(255, 51, 0, 0.1),
-      inset 0 0 40px rgba(255, 51, 0, 0.05),
-      inset 0 0 0 1px rgba(232, 236, 245, 0.04);
+      0 0 120px rgba(255, 51, 0, 0.2),
+      0 0 60px rgba(255, 51, 0, 0.15),
+      0 0 200px rgba(255, 80, 20, 0.08),
+      inset 0 0 60px rgba(255, 51, 0, 0.1),
+      inset 0 0 0 1px rgba(232, 236, 245, 0.06);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -824,7 +828,8 @@
       <svg viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#FF3300" stop-opacity="0.12"/>
+            <stop offset="0%" stop-color="#FF3300" stop-opacity="0.25"/>
+            <stop offset="60%" stop-color="#FF3300" stop-opacity="0.08"/>
             <stop offset="100%" stop-color="#FF3300" stop-opacity="0"/>
           </radialGradient>
         </defs>
@@ -850,8 +855,47 @@
       </svg>
     </div>
 
-    <!-- Spokes -->
-    <svg class="spokes" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg"></svg>
+    <!-- Connector lines — thin orange from center to each node -->
+    <svg class="spokes" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="spoke1" x1="350" y1="350" x2="350" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5500" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF5500" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="spoke2" x1="350" y1="350" x2="597" y2="270" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5500" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF5500" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="spoke3" x1="350" y1="350" x2="503" y2="560" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5500" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF5500" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="spoke4" x1="350" y1="350" x2="197" y2="560" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5500" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF5500" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="spoke5" x1="350" y1="350" x2="103" y2="270" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5500" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF5500" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <!-- Node 1: -90° (top) -->
+      <line x1="350" y1="350" x2="350" y2="90" stroke="url(#spoke1)" stroke-width="0.8" stroke-dasharray="4 6"/>
+      <!-- Node 2: -18° (upper-right) -->
+      <line x1="350" y1="350" x2="597" y2="270" stroke="url(#spoke2)" stroke-width="0.8" stroke-dasharray="4 6"/>
+      <!-- Node 3: 54° (lower-right) -->
+      <line x1="350" y1="350" x2="503" y2="560" stroke="url(#spoke3)" stroke-width="0.8" stroke-dasharray="4 6"/>
+      <!-- Node 4: 126° (lower-left) -->
+      <line x1="350" y1="350" x2="197" y2="560" stroke="url(#spoke4)" stroke-width="0.8" stroke-dasharray="4 6"/>
+      <!-- Node 5: 198° (upper-left) -->
+      <line x1="350" y1="350" x2="103" y2="270" stroke="url(#spoke5)" stroke-width="0.8" stroke-dasharray="4 6"/>
+      <!-- Small dots at connection points on core edge -->
+      <circle cx="350" cy="180" r="2" fill="#FF5500" opacity="0.4"/>
+      <circle cx="510" cy="300" r="2" fill="#FF5500" opacity="0.4"/>
+      <circle cx="460" cy="490" r="2" fill="#FF5500" opacity="0.4"/>
+      <circle cx="240" cy="490" r="2" fill="#FF5500" opacity="0.4"/>
+      <circle cx="190" cy="300" r="2" fill="#FF5500" opacity="0.4"/>
+    </svg>
 
     <!-- ═══ CORE ═══ -->
     <div class="core" id="core">
