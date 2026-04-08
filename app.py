@@ -34,7 +34,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "mbanc-auth-dev-key")
 app.config["SESSION_COOKIE_NAME"] = "mbanc_session"
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_SECURE"] = False
 app.config["SESSION_COOKIE_DOMAIN"] = os.environ.get("SESSION_COOKIE_DOMAIN", ".mbanc.ai")
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=12)
 
