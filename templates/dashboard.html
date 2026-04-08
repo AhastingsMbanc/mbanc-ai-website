@@ -116,6 +116,18 @@
   }
   @keyframes navIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
 
+  .header-center {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 500;
+    opacity: 0; animation: navIn 0.5s 0.2s ease forwards;
+    pointer-events: none;
+  }
+
   .header-right {
     display: flex; align-items: center; gap: 14px;
     opacity: 0; animation: navIn 0.4s 0.3s ease forwards;
@@ -132,28 +144,30 @@
   .btn-settings {
     display: flex; align-items: center; justify-content: center;
     width: 26px; height: 26px; border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 51, 0, 0.08);
+    color: #ff6633;
     text-decoration: none; font-size: 0.9rem;
-    transition: all 0.25s; border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.25s; border: 1px solid rgba(255, 51, 0, 0.2);
     cursor: pointer;
   }
   .btn-settings:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #FF3300;
-    border-color: rgba(255, 51, 0, 0.3);
+    background: rgba(255, 51, 0, 0.15);
+    color: #ff4400;
+    border-color: rgba(255, 51, 0, 0.5);
+    box-shadow: 0 0 12px rgba(255, 51, 0, 0.15);
   }
   .btn-logout {
-    padding: 4px 12px; border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px; background: rgba(255, 255, 255, 0.03);
-    font-size: 0.72rem; cursor: pointer; color: rgba(255, 255, 255, 0.35);
+    padding: 4px 12px; border: 1px solid rgba(255, 51, 0, 0.2);
+    border-radius: 8px; background: rgba(255, 51, 0, 0.08);
+    font-size: 0.72rem; cursor: pointer; color: #ff6633;
     transition: all 0.25s; letter-spacing: 0.5px; text-transform: uppercase;
     text-decoration: none; font-family: inherit;
   }
   .btn-logout:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 51, 0, 0.15);
+    border-color: rgba(255, 51, 0, 0.5);
+    color: #ff4400;
+    box-shadow: 0 0 12px rgba(255, 51, 0, 0.15);
   }
 
   /* ═══ CONSOLE ═══ */
@@ -169,29 +183,7 @@
     z-index: 2;
   }
 
-  .console-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-weight: 500;
-    opacity: 0;
-    animation: fadeIn 1s 0.2s forwards;
-    position: relative;
-    z-index: 30;
-  }
-  .console-label::before,
-  .console-label::after {
-    content: "";
-    width: 40px;
-    height: 1px;
-    background: var(--ink-4);
-  }
+  .console-label { display: none; }
   @keyframes fadeIn { to { opacity: 1; } }
 
   /* Ring container */
@@ -398,20 +390,10 @@
   .node-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    justify-content: flex-end;
+    margin-bottom: 4px;
   }
-  .node-key {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 9px;
-    color: var(--red-2);
-    font-weight: 600;
-    padding: 2px 6px;
-    border: 1px solid rgba(255, 51, 0, 0.35);
-    border-radius: 3px;
-    background: rgba(255, 51, 0, 0.08);
-    letter-spacing: 0.04em;
-  }
+  .node-key { display: none; }
   .node-icon {
     width: 22px;
     height: 22px;
@@ -439,11 +421,7 @@
   }
   .node-stat b { color: var(--red-2); font-weight: 600; }
 
-  .node.soon .node-key {
-    color: var(--ink-2);
-    border-color: var(--ink-4);
-    background: rgba(232, 236, 245, 0.04);
-  }
+  .node.soon .node-key { display: none; }
 
   /* Spokes */
   .spokes {
@@ -473,7 +451,10 @@
   }
   .cmdbar .slash {
     font-family: "JetBrains Mono", monospace;
-    color: var(--red-2);
+    background: linear-gradient(90deg, #ff6633, #ff9050, #4a8ec0, #2a6090);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-size: 14px;
     font-weight: 600;
   }
@@ -486,8 +467,15 @@
     font-size: 13px;
     color: var(--ink);
     font-weight: 400;
+    caret-color: #ff6633;
   }
-  .cmdbar input::placeholder { color: var(--ink-3); }
+  .cmdbar input::placeholder {
+    background: linear-gradient(90deg, #ff8040, #e06020, #6090c0, #3060a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.8;
+  }
   .cmdbar .kbd {
     font-family: "JetBrains Mono", monospace;
     font-size: 9px;
@@ -804,6 +792,7 @@
     <div class="header-sep"></div>
     <h1 class="app-title"><span style="color: #ffffff;">mbanc</span><span style="color: var(--red-2);">.ai</span></h1>
   </div>
+  <div class="header-center">Mbanc Internal Command Console</div>
   <div class="header-right">
     <span class="user-info" id="hudUserInfo">
       {{ user.get('display_name', '') or ((user.get('first_name', '') + ' ' + user.get('last_name', '')) | trim) or 'Guest' }}
@@ -816,10 +805,6 @@
 
 <!-- ═══ CONSOLE ═══ -->
 <main class="console">
-
-  <div class="console-label">
-    &nbsp;Mbanc Internal Command Console&nbsp;
-  </div>
 
   <div class="ring-container">
 
@@ -969,12 +954,12 @@
 
   </div>
 
-  <!-- Command bar -->
-  <div class="cmdbar">
+  <!-- Search bar -->
+  <form class="cmdbar" id="siteSearch" autocomplete="off" onsubmit="return handleSearch(event)">
     <span class="slash">/</span>
-    <input type="text" placeholder="Ask the suite anything — or press 1 to 5 to launch" />
-    <span class="kbd">⌘ K</span>
-  </div>
+    <input type="text" id="searchInput" placeholder="Search mbanc.ai — Pricing, Guidelines, Secondary Market, History" />
+    <span class="kbd">⏎</span>
+  </form>
 
 </main>
 
@@ -983,6 +968,35 @@
 </footer>
 
 <script>
+  // ═══ SITE SEARCH ═══
+  const searchRoutes = {
+    'pricing': 'https://pricingprofessor.mbanc.ai/',
+    'price': 'https://pricingprofessor.mbanc.ai/',
+    'lock': 'https://pricingprofessor.mbanc.ai/',
+    'loan': 'https://pricingprofessor.mbanc.ai/',
+    'quote': 'https://pricingprofessor.mbanc.ai/',
+    'guidelines': 'https://pricingprofessor.mbanc.ai/guidelines',
+    'guideline': 'https://pricingprofessor.mbanc.ai/guidelines',
+    'secondary': 'https://pricingprofessor.mbanc.ai/secondary',
+    'secondary market': 'https://pricingprofessor.mbanc.ai/secondary',
+    'history': 'https://pricingprofessor.mbanc.ai/history',
+    'dashboard': 'https://mbanc.ai/',
+    'home': 'https://mbanc.ai/',
+    'settings': 'https://auth.mbanc.ai/settings',
+    'account': 'https://auth.mbanc.ai/settings',
+    'profile': 'https://auth.mbanc.ai/settings',
+  };
+  function handleSearch(e) {
+    e.preventDefault();
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    for (const [key, url] of Object.entries(searchRoutes)) {
+      if (q.includes(key)) { window.location.href = url; return false; }
+    }
+    // Default: go to pricing professor
+    if (q) window.location.href = 'https://pricingprofessor.mbanc.ai/';
+    return false;
+  }
+
   // ═══ DEFAULT CORE STATE ═══
   const defaultState = {
     title: '{{ brand.brand.full_name if brand and brand.brand else "Mortgage Bank of California" }}',
