@@ -34,12 +34,9 @@ app.secret_key = os.environ.get("SECRET_KEY", "mbanc-auth-dev-key-change-in-prod
 app.config["SESSION_COOKIE_NAME"] = "mbanc_session"
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["SESSION_COOKIE_SECURE"] = os.environ.get("FLASK_ENV") == "production"
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_DOMAIN"] = os.environ.get("SESSION_COOKIE_DOMAIN", ".mbanc.ai")
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=12)
-
-# Must match auth.mbanc.ai's cookie domain
-if os.environ.get("FLASK_ENV") == "production":
-    app.config["SESSION_COOKIE_DOMAIN"] = ".mbanc.ai"
 
 AUTH_URL = os.environ.get("AUTH_URL", "https://auth.mbanc.ai")
 AUTH_INTERNAL_URL = os.environ.get("AUTH_INTERNAL_URL", AUTH_URL)  # Docker-internal for proxy calls
