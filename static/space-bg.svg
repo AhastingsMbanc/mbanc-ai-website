@@ -6,17 +6,17 @@
       <stop offset="30%"  stop-color="#04122a"/>
       <stop offset="55%"  stop-color="#081a3a"/>
       <stop offset="72%"  stop-color="#1a2040"/>
-      <stop offset="82%"  stop-color="#3a2030"/>
-      <stop offset="90%"  stop-color="#8b4020"/>
-      <stop offset="96%"  stop-color="#c86020"/>
-      <stop offset="100%" stop-color="#e87830"/>
+      <stop offset="82%"  stop-color="#3a1820"/>
+      <stop offset="90%"  stop-color="#7a2810"/>
+      <stop offset="96%"  stop-color="#b83a08"/>
+      <stop offset="100%" stop-color="#ff3300"/>
     </linearGradient>
 
     <!-- Sunrise glow — bottom-right warm wash -->
     <radialGradient id="sunGlow" cx="85%" cy="95%" r="50%">
-      <stop offset="0%"  stop-color="#e87830" stop-opacity="0.25"/>
-      <stop offset="40%" stop-color="#a04010" stop-opacity="0.1"/>
-      <stop offset="100%" stop-color="#a04010" stop-opacity="0"/>
+      <stop offset="0%"  stop-color="#ff3300" stop-opacity="0.3"/>
+      <stop offset="40%" stop-color="#cc2200" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#801500" stop-opacity="0"/>
     </radialGradient>
 
     <!-- Star glow filter -->
