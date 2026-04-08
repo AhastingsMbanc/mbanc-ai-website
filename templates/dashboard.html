@@ -237,13 +237,13 @@
     background: rgba(9, 22, 56, 0.5);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 51, 0, 0.35);
+    border: 1px solid rgba(255, 51, 0, 0.45);
     box-shadow:
-      0 0 120px rgba(255, 51, 0, 0.2),
-      0 0 60px rgba(255, 51, 0, 0.15),
-      0 0 200px rgba(255, 80, 20, 0.08),
-      inset 0 0 60px rgba(255, 51, 0, 0.1),
-      inset 0 0 0 1px rgba(232, 236, 245, 0.06);
+      0 0 80px 20px rgba(255, 51, 0, 0.25),
+      0 0 160px 40px rgba(255, 60, 10, 0.15),
+      0 0 300px 80px rgba(255, 80, 20, 0.08),
+      inset 0 0 80px rgba(255, 51, 0, 0.15),
+      inset 0 0 0 1px rgba(232, 236, 245, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -254,8 +254,8 @@
     animation: coreGlow 4s ease-in-out infinite;
   }
   @keyframes coreGlow {
-    0%, 100% { box-shadow: 0 0 120px rgba(255, 51, 0, 0.2), 0 0 60px rgba(255, 51, 0, 0.15), 0 0 200px rgba(255, 80, 20, 0.08), inset 0 0 60px rgba(255, 51, 0, 0.1), inset 0 0 0 1px rgba(232, 236, 245, 0.06); }
-    50% { box-shadow: 0 0 140px rgba(255, 51, 0, 0.28), 0 0 80px rgba(255, 51, 0, 0.2), 0 0 240px rgba(255, 80, 20, 0.12), inset 0 0 80px rgba(255, 51, 0, 0.14), inset 0 0 0 1px rgba(232, 236, 245, 0.08); }
+    0%, 100% { box-shadow: 0 0 80px 20px rgba(255, 51, 0, 0.25), 0 0 160px 40px rgba(255, 60, 10, 0.15), 0 0 300px 80px rgba(255, 80, 20, 0.08), inset 0 0 80px rgba(255, 51, 0, 0.15), inset 0 0 0 1px rgba(232, 236, 245, 0.08); }
+    50% { box-shadow: 0 0 100px 30px rgba(255, 51, 0, 0.35), 0 0 200px 60px rgba(255, 60, 10, 0.2), 0 0 350px 100px rgba(255, 80, 20, 0.12), inset 0 0 100px rgba(255, 51, 0, 0.2), inset 0 0 0 1px rgba(232, 236, 245, 0.1); }
   }
   .core::before {
     content: "";
