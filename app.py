@@ -41,6 +41,7 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=12)
 AUTH_URL = os.environ.get("AUTH_URL", "https://auth.mbanc.ai")
 AUTH_INTERNAL_URL = os.environ.get("AUTH_INTERNAL_URL", AUTH_URL)  # Docker-internal for proxy calls
 DASHBOARD_URL = os.environ.get("DASHBOARD_URL", "https://mbanc.ai")
+PP_INTERNAL_URL = os.environ.get("PP_INTERNAL_URL", "http://pricing-professor:5050")  # PricingProfessor on mbanc-net
 
 
 @app.route("/api/health", methods=["GET"])
@@ -74,16 +75,38 @@ def proxy_login():
         return jsonify({"error": f"Auth service unavailable: {str(e)}"}), 502
 
 
+def _fetch_active_loan_count():
+    """Fetch active loan count from PricingProfessor API (internal network)."""
+    try:
+        resp = http_requests.get(f"{PP_INTERNAL_URL}/api/pipeline/active-count", timeout=5)
+        if resp.status_code == 200:
+            return resp.json().get("count")
+    except Exception:
+        pass
+    return None
+
+
+@app.route("/api/pipeline/active-count", methods=["GET"])
+def proxy_active_count():
+    """Proxy pipeline stats from PricingProfessor for dashboard JS polling."""
+    count = _fetch_active_loan_count()
+    if count is not None:
+        return jsonify({"count": count})
+    return jsonify({"count": None, "error": "unavailable"}), 502
+
+
 @app.route("/")
 def index():
     """Always render dashboard — login overlay shows if not authenticated."""
     authenticated = "user_id" in session
+    active_loans = _fetch_active_loan_count()
     return render_template(
         "dashboard.html",
         user=session if authenticated else {},
         auth_url=AUTH_URL,
         brand=BRAND,
         authenticated=authenticated,
+        active_loans=active_loans,
     )
 
 

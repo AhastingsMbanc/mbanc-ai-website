@@ -13,6 +13,7 @@ services:
       - AUTH_URL=https://auth.mbanc.ai
       - AUTH_INTERNAL_URL=http://mbanc-auth:5060
       - DASHBOARD_URL=https://mbanc.ai
+      - PP_INTERNAL_URL=http://pricing-professor:5050
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5070/api/health')"]
       interval: 30s
