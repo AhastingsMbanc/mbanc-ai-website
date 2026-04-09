@@ -81,7 +81,7 @@
   /* ═══ UNIFIED HOLOGRAPHIC TOP BAR (matches PricingProfessor) ═══ */
   .app-header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    height: 54px; padding: 0 28px;
+    height: 68px; padding: 0 34px;
     display: flex; align-items: center; justify-content: space-between;
     pointer-events: none;
     background: linear-gradient(180deg, rgba(9, 22, 56, 0.7) 0%, rgba(9, 22, 56, 0.25) 75%, transparent 100%);
@@ -95,10 +95,10 @@
   .app-header > * { pointer-events: auto; }
   @keyframes hdrIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-left { display: flex; align-items: center; gap: 18px; }
   .logo-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 34px; height: 34px; border-radius: 10px; overflow: hidden;
+    width: 42px; height: 42px; border-radius: 12px; overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(9, 22, 56, 0.4);
     backdrop-filter: blur(8px);
@@ -113,12 +113,12 @@
   .logo-img { width: 100%; height: 100%; object-fit: cover; }
 
   .header-sep {
-    width: 1px; height: 22px;
+    width: 1px; height: 28px;
     background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   }
 
   .app-title {
-    font-size: 1.15rem; font-weight: 700; letter-spacing: -0.3px;
+    font-size: 1.44rem; font-weight: 700; letter-spacing: -0.3px;
     opacity: 0; animation: navIn 0.4s 0.15s ease forwards;
   }
   @keyframes navIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
@@ -126,7 +126,7 @@
   .header-center {
     position: absolute; left: 50%; transform: translateX(-50%);
     font-family: "JetBrains Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     color: #ff6633;
     text-transform: uppercase;
     letter-spacing: 0.22em;
@@ -139,20 +139,20 @@
   .header-center::before,
   .header-center::after {
     content: "";
-    width: 40px; height: 1px;
+    width: 50px; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(255, 80, 30, 0.4), transparent);
   }
 
   .header-right {
-    display: flex; align-items: center; gap: 14px;
+    display: flex; align-items: center; gap: 18px;
     opacity: 0; animation: navIn 0.4s 0.3s ease forwards;
   }
   .user-info {
-    font-size: 0.8rem; color: rgba(255, 255, 255, 0.55); font-weight: 500;
+    font-size: 1rem; color: rgba(255, 255, 255, 0.55); font-weight: 500;
   }
   .user-role {
-    padding: 1px 8px; border-radius: 10px;
-    font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+    padding: 2px 10px; border-radius: 12px;
+    font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
     background: rgba(255, 51, 0, 0.12); color: #FF3300;
     letter-spacing: 0.5px; margin-left: 8px;
   }
