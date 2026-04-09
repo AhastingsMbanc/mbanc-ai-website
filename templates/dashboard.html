@@ -900,7 +900,7 @@
           <span class="node-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
         </div>
         <div class="node-name">Pricing<br>Professor</div>
-        <div class="node-stat" id="pp-rate-update"><b>Live</b> / {{ rate_sheet_update if rate_sheet_update else '—' }}</div>
+        <div class="node-stat" id="pp-rate-update" data-utc="{{ rate_sheet_utc if rate_sheet_utc else '' }}"><b>Live</b> / —</div>
       </div>
     </a>
 
@@ -1160,16 +1160,33 @@
     }, 300000);
   })();
 
-  /* ── PP Rate Sheet Update — refresh every 10 min ── */
-  (function refreshRateSheet() {
+  /* ── PP Rate Sheet Update — format in visitor's timezone ── */
+  (function ppRateSheet() {
     const el = document.getElementById('pp-rate-update');
     if (!el) return;
+
+    function formatUtc(iso) {
+      if (!iso) return null;
+      const d = new Date(iso);
+      if (isNaN(d)) return null;
+      return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+        + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    }
+
+    function render(fmt) {
+      if (fmt) el.innerHTML = '<b>Live</b> // Last Upd: ' + fmt;
+    }
+
+    // Format the server-rendered UTC value on page load
+    render(formatUtc(el.dataset.utc));
+
+    // Refresh every 10 min
     setInterval(async () => {
       try {
         const r = await fetch('/api/rate-sheets/latest-update');
         if (r.ok) {
           const d = await r.json();
-          if (d.latest) el.innerHTML = '<b>Live</b> / ' + d.latest;
+          render(formatUtc(d.latest_utc));
         }
       } catch (_) { /* silent */ }
     }, 600000);
