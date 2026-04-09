@@ -1122,7 +1122,8 @@
     const mm = String(d.getMinutes()).padStart(2, '0');
     const ss = String(d.getSeconds()).padStart(2, '0');
     defaultState.sub = months[d.getMonth()] + ' ' + d.getDate() + ' · ' + d.getFullYear() + ' · ' + hh + ':' + mm + ':' + ss;
-    if (coreTitle.textContent === defaultState.title) {
+    // Only update if core is in default state (M logo visible, no app hovered)
+    if (!coreLogo.classList.contains('blurred')) {
       coreSub.textContent = defaultState.sub;
     }
   }
