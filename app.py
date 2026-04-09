@@ -86,6 +86,17 @@ def _fetch_active_loan_count():
     return None
 
 
+def _fetch_rate_sheet_update():
+    """Fetch most recent rate sheet update time from PricingProfessor."""
+    try:
+        resp = http_requests.get(f"{PP_INTERNAL_URL}/api/rate-sheets/latest-update", timeout=5)
+        if resp.status_code == 200:
+            return resp.json().get("latest")
+    except Exception:
+        pass
+    return None
+
+
 @app.route("/api/pipeline/active-count", methods=["GET"])
 def proxy_active_count():
     """Proxy pipeline stats from PricingProfessor for dashboard JS polling."""
@@ -95,15 +106,26 @@ def proxy_active_count():
     return jsonify({"count": None, "error": "unavailable"}), 502
 
 
+@app.route("/api/rate-sheets/latest-update", methods=["GET"])
+def proxy_rate_sheet_update():
+    """Proxy rate sheet update time from PricingProfessor."""
+    latest = _fetch_rate_sheet_update()
+    if latest is not None:
+        return jsonify({"latest": latest})
+    return jsonify({"latest": None}), 502
+
+
 @app.route("/")
 def index():
     """Always render dashboard — login overlay shows if not authenticated."""
     authenticated = "user_id" in session
     active_loans = _fetch_active_loan_count()
+    rate_sheet_update = _fetch_rate_sheet_update()
     return render_template(
         "dashboard.html",
         user=session if authenticated else {},
         auth_url=AUTH_URL,
+        rate_sheet_update=rate_sheet_update,
         brand=BRAND,
         authenticated=authenticated,
         active_loans=active_loans,

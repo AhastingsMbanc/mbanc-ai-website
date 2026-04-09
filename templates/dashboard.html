@@ -900,7 +900,7 @@
           <span class="node-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
         </div>
         <div class="node-name">Pricing<br>Professor</div>
-        <div class="node-stat"><b>Live</b> / day</div>
+        <div class="node-stat" id="pp-rate-update"><b>Live</b> / {{ rate_sheet_update if rate_sheet_update else '—' }}</div>
       </div>
     </a>
 
@@ -1157,7 +1157,22 @@
           if (d.count != null) el.textContent = d.count;
         }
       } catch (_) { /* silent */ }
-    }, 300000); // 5 minutes
+    }, 300000);
+  })();
+
+  /* ── PP Rate Sheet Update — refresh every 10 min ── */
+  (function refreshRateSheet() {
+    const el = document.getElementById('pp-rate-update');
+    if (!el) return;
+    setInterval(async () => {
+      try {
+        const r = await fetch('/api/rate-sheets/latest-update');
+        if (r.ok) {
+          const d = await r.json();
+          if (d.latest) el.innerHTML = '<b>Live</b> / ' + d.latest;
+        }
+      } catch (_) { /* silent */ }
+    }, 600000);
   })();
 </script>
 
