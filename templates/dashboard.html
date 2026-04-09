@@ -158,7 +158,7 @@
   }
   .btn-settings {
     display: flex; align-items: center; justify-content: center;
-    width: 26px; height: 26px; border-radius: 8px;
+    width: 32px; height: 32px; border-radius: 10px;
     background: rgba(255, 51, 0, 0.08);
     color: #ff6633;
     text-decoration: none; font-size: 0.9rem;
@@ -315,11 +315,12 @@
   }
   .core-logo {
     width: clamp(60px, 14vmin, 160px);
-    height: auto;
+    height: clamp(60px, 14vmin, 160px);
     object-fit: contain;
     transition: filter 0.35s ease, opacity 0.35s ease;
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
   }
   .core-logo.blurred {
     filter: blur(6px) brightness(0.6);
