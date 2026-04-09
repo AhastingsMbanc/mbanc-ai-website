@@ -203,7 +203,7 @@
 
   /* Ring container — scales with viewport so zoom in/out stays proportional */
   .ring-container {
-    --ring-size: clamp(440px, 92vmin, 1020px);
+    --ring-size: clamp(500px, 105vmin, 1300px);
     position: relative;
     width: var(--ring-size);
     height: var(--ring-size);
@@ -237,8 +237,8 @@
   .core {
     position: relative;
     z-index: 10;
-    width: clamp(200px, 40vmin, 440px);
-    height: clamp(200px, 40vmin, 440px);
+    width: clamp(220px, 48vmin, 530px);
+    height: clamp(220px, 48vmin, 530px);
     border-radius: 50%;
     background: rgba(9, 22, 56, 0.5);
     backdrop-filter: blur(20px);
@@ -255,7 +255,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: clamp(16px, 4vmin, 44px);
+    padding: clamp(18px, 5vmin, 54px);
     text-align: center;
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     animation: coreGlow 4s ease-in-out infinite;
@@ -283,11 +283,11 @@
 
   .core-label {
     font-family: "JetBrains Mono", monospace;
-    font-size: clamp(9px, 1.1vmin, 12px);
+    font-size: clamp(10px, 1.3vmin, 14px);
     color: var(--red-2);
     text-transform: uppercase;
     letter-spacing: 0.24em;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     font-weight: 600;
     position: relative;
     z-index: 2;
@@ -303,7 +303,7 @@
 
   .core-title {
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(15px, 2.8vmin, 32px);
+    font-size: clamp(18px, 3.5vmin, 40px);
     font-weight: 700;
     letter-spacing: -0.01em;
     color: #f0f4f8;
@@ -315,7 +315,7 @@
   }
   .core-sub {
     font-family: "JetBrains Mono", monospace;
-    font-size: clamp(9px, 1.1vmin, 12px);
+    font-size: clamp(10px, 1.3vmin, 14px);
     color: rgba(200, 212, 230, 0.6);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -332,15 +332,15 @@
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(10px, 2vmin, 22px) clamp(14px, 2.8vmin, 32px);
+    gap: clamp(12px, 2.4vmin, 28px) clamp(16px, 3.4vmin, 40px);
     width: 100%;
-    max-width: clamp(140px, 24vmin, 260px);
+    max-width: clamp(160px, 30vmin, 320px);
     transition: opacity 0.3s;
   }
   .core-data .cd { text-align: left; }
   .core-data .cd .k {
     font-family: "JetBrains Mono", monospace;
-    font-size: clamp(7px, 0.9vmin, 10px);
+    font-size: clamp(8px, 1.1vmin, 12px);
     color: rgba(200, 212, 230, 0.6);
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -349,13 +349,13 @@
   }
   .core-data .cd .v {
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(14px, 2.1vmin, 22px);
+    font-size: clamp(16px, 2.6vmin, 28px);
     font-weight: 600;
     color: var(--ink);
     letter-spacing: -0.01em;
     line-height: 1;
   }
-  .core-data .cd .v .u { font-size: clamp(8px, 1.1vmin, 12px); color: var(--red-2); font-weight: 500; margin-left: 1px; }
+  .core-data .cd .v .u { font-size: clamp(10px, 1.4vmin, 16px); color: var(--red-2); font-weight: 500; margin-left: 1px; }
   .core-data .cd .v.up { color: var(--success); }
   .core-data .cd .v.down { color: var(--red-2); }
 
@@ -364,11 +364,11 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: clamp(120px, 18vmin, 196px);
+    width: clamp(140px, 22vmin, 250px);
     z-index: 15;
     cursor: pointer;
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --radius: clamp(232px, 36vmin, 400px);
+    --radius: clamp(270px, 43vmin, 500px);
     transform:
       translate(-50%, -50%)
       rotate(var(--angle))
@@ -382,9 +382,9 @@
     backdrop-filter: blur(20px) saturate(1.4);
     -webkit-backdrop-filter: blur(20px) saturate(1.4);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 10px 12px 8px;
-    min-height: 62px;
+    border-radius: 14px;
+    padding: 14px 16px 10px;
+    min-height: 78px;
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.3),
@@ -416,8 +416,8 @@
   }
   .node-key { display: none; }
   .node-icon {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     color: #ff6633;
     display: flex;
     align-items: center;
@@ -427,7 +427,7 @@
   }
   .node-name {
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(11px, 1.4vmin, 15px);
+    font-size: clamp(13px, 1.8vmin, 19px);
     font-weight: 700;
     color: var(--ink);
     letter-spacing: -0.005em;
@@ -437,7 +437,7 @@
   }
   .node-stat {
     font-family: "JetBrains Mono", monospace;
-    font-size: clamp(8px, 1vmin, 11px);
+    font-size: clamp(9px, 1.2vmin, 13px);
     color: var(--ink-3);
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -814,7 +814,7 @@
             <stop offset="100%" stop-color="#FF3300" stop-opacity="0"/>
           </radialGradient>
         </defs>
-        <circle cx="350" cy="350" r="340" fill="url(#coreGlow)"/>
+        <circle cx="350" cy="350" r="350" fill="url(#coreGlow)"/>
         <g class="rot-slow">
           <circle cx="350" cy="350" r="330" stroke="rgba(255,51,0,0.15)" stroke-width="1"/>
           <circle cx="350" cy="350" r="330" stroke="rgba(255,51,0,0.35)" stroke-width="1" stroke-dasharray="2 28"/>
