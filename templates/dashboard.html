@@ -1226,9 +1226,23 @@
     }
 
     // Format the server-rendered UTC value on page load
-    render(formatUtc(el.dataset.utc));
+    const initial = formatUtc(el.dataset.utc);
+    if (initial) {
+      render(initial);
+    } else {
+      // Server may not have had PP ready at render time — retry after 5s
+      setTimeout(async () => {
+        try {
+          const r = await fetch('/api/rate-sheets/latest-update');
+          if (r.ok) {
+            const d = await r.json();
+            render(formatUtc(d.latest_utc));
+          }
+        } catch (_) {}
+      }, 5000);
+    }
 
-    // Refresh every 10 min
+    // Refresh every 2 min
     setInterval(async () => {
       try {
         const r = await fetch('/api/rate-sheets/latest-update');
@@ -1237,7 +1251,7 @@
           render(formatUtc(d.latest_utc));
         }
       } catch (_) { /* silent */ }
-    }, 600000);
+    }, 120000);
   })();
 </script>
 
