@@ -391,6 +391,7 @@
   .core-data .cd .v .u { font-size: clamp(10px, 1.4vmin, 16px); color: var(--red-2); font-weight: 500; margin-left: 1px; }
   .core-data .cd .v.up { color: var(--success); }
   .core-data .cd .v.down { color: var(--red-2); }
+  .core-data .cd .v.live-green { color: #22c55e; text-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
 
   /* ═══ APP NODES — glassmorphism ═══ */
   .node {
@@ -942,7 +943,7 @@
       </div>
     </a>
 
-    <a href="https://appchecker.mbanc.ai" class="node" style="--angle: -8deg;" data-app="2" data-name="App Checker" data-sub="Loan Compliance Engine" data-k1="Investors" data-v1="eRESI, Verus" data-k2="Checks" data-v2="50+ rules" data-k3="Batch" data-v3="Up to 100" data-k4="Status" data-v4="Live">
+    <a href="https://appchecker.mbanc.ai" class="node" style="--angle: -8deg;" data-app="2" data-name="App Checker" data-sub="Loan Compliance Engine" data-k1="Investors" data-v1="eRESI, Verus" data-k2="Data Points" data-v2="200+" data-k3="Avg Time" data-v3="&lt;3s" data-k4="Status" data-v4="Live">
       <div class="node-inner">
         <div class="node-head">
           <span class="node-key">2</span>
@@ -1065,9 +1066,10 @@
     }
     setTimeout(() => {
       coreSub.textContent = state.sub || '';
-      coreData.innerHTML = state.data.map(d =>
-        '<div class="cd"><div class="k">' + d.k + '</div><div class="v ' + (d.cls||'') + '">' + d.v + (d.u ? '<span class="u">' + d.u + '</span>' : '') + '</div></div>'
-      ).join('');
+      coreData.innerHTML = state.data.map(d => {
+        const cls = d.cls || (d.v === 'Live' ? 'live-green' : '');
+        return '<div class="cd"><div class="k">' + d.k + '</div><div class="v ' + cls + '">' + d.v + (d.u ? '<span class="u">' + d.u + '</span>' : '') + '</div></div>';
+      }).join('');
       coreSub.style.opacity = 1;
       coreData.style.opacity = 1;
     }, 150);
