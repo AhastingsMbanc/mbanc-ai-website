@@ -1210,28 +1210,24 @@
 
   /* ── PP Rate Sheet Update — format in visitor's timezone ── */
   (function ppRateSheet() {
-    const el = document.getElementById('pp-rate-update');
-    if (!el) return;
+    try {
+      const el = document.getElementById('pp-rate-update');
+      if (!el) return;
 
-    function formatUtc(iso) {
-      if (!iso) return null;
-      const d = new Date(iso);
-      if (isNaN(d)) return null;
-      return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
-        + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    }
+      function formatUtc(iso) {
+        if (!iso) return null;
+        const d = new Date(iso);
+        if (isNaN(d)) return null;
+        return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+          + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+      }
 
-    function render(fmt) {
-      if (fmt) el.innerHTML = '<b>Live</b> // Last Upd: ' + fmt;
-    }
+      function render(fmt) {
+        if (fmt) el.innerHTML = '<b>Live</b> // Last Upd: ' + fmt;
+      }
 
-    // Format the server-rendered UTC value on page load
-    const initial = formatUtc(el.dataset.utc);
-    if (initial) {
-      render(initial);
-    } else {
-      // Server may not have had PP ready at render time — retry after 5s
-      setTimeout(async () => {
+      // Always fetch fresh on page load (don't rely on server-rendered data-utc)
+      async function refresh() {
         try {
           const r = await fetch('/api/rate-sheets/latest-update');
           if (r.ok) {
@@ -1239,19 +1235,19 @@
             render(formatUtc(d.latest_utc));
           }
         } catch (_) {}
-      }, 5000);
-    }
+      }
 
-    // Refresh every 2 min
-    setInterval(async () => {
-      try {
-        const r = await fetch('/api/rate-sheets/latest-update');
-        if (r.ok) {
-          const d = await r.json();
-          render(formatUtc(d.latest_utc));
-        }
-      } catch (_) { /* silent */ }
-    }, 120000);
+      // Try server-rendered value first
+      const initial = formatUtc(el.dataset.utc);
+      if (initial) {
+        render(initial);
+      }
+      // Always fetch fresh after 1s regardless
+      setTimeout(refresh, 1000);
+
+      // Refresh every 2 min
+      setInterval(refresh, 120000);
+    } catch (e) { console.error('ppRateSheet error:', e); }
   })();
 </script>
 
