@@ -289,8 +289,12 @@
     letter-spacing: 0.24em;
     margin-bottom: 16px;
     font-weight: 600;
-    position: relative;
+    position: absolute;
+    top: clamp(30px, 8vmin, 80px);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
+    white-space: nowrap;
   }
   .core-label::before {
     content: "●";
@@ -301,17 +305,45 @@
   }
   @keyframes blink { 0%, 100% { opacity: 1; text-shadow: 0 0 6px #22c55e, 0 0 14px rgba(34,197,94,0.6), 0 0 28px rgba(34,197,94,0.3); } 50% { opacity: 0.5; text-shadow: 0 0 3px #22c55e, 0 0 8px rgba(34,197,94,0.3); } }
 
-  .core-title {
+  .core-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: clamp(40px, 10vmin, 100px);
+  }
+  .core-logo {
+    width: clamp(60px, 14vmin, 160px);
+    height: auto;
+    object-fit: contain;
+    transition: filter 0.35s ease, opacity 0.35s ease;
+    position: relative;
+    z-index: 2;
+  }
+  .core-logo.blurred {
+    filter: blur(12px) brightness(0.5);
+    opacity: 0.3;
+  }
+  .core-app-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
     font-family: "Montserrat", sans-serif;
     font-size: clamp(18px, 3.5vmin, 40px);
     font-weight: 700;
-    letter-spacing: -0.01em;
     color: #f0f4f8;
-    margin-bottom: 4px;
-    position: relative;
-    z-index: 2;
-    min-height: 26px;
-    transition: opacity 0.3s;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 3;
+    pointer-events: none;
+    text-shadow: 0 0 20px rgba(255, 51, 0, 0.4);
+  }
+  .core-app-overlay.visible {
+    opacity: 1;
   }
   .core-sub {
     font-family: "JetBrains Mono", monospace;
@@ -319,7 +351,8 @@
     color: rgba(200, 212, 230, 0.6);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    margin-bottom: 16px;
     font-weight: 500;
     position: relative;
     z-index: 2;
@@ -881,13 +914,18 @@
     <!-- ═══ CORE ═══ -->
     <div class="core" id="core">
       <div class="core-label">MBANC / LIVE STATE</div>
-      <div class="core-title" id="core-title">{{ brand.brand.full_name if brand and brand.brand else 'Mortgage Bank of California' }}</div>
-      <div class="core-sub" id="core-sub"></div>
-      <div class="core-data" id="core-data">
-        <div class="cd"><div class="k">Pipeline</div><div class="v">$487<span class="u">M</span></div></div>
-        <div class="cd"><div class="k">Active Loans</div><div class="v" id="active-loan-count">{{ active_loans if active_loans is not none else '—' }}</div></div>
-        <div class="cd"><div class="k">Avg Rate</div><div class="v down">6.75<span class="u">%</span></div></div>
-        <div class="cd"><div class="k">Pull-Thru</div><div class="v up">97<span class="u">%</span></div></div>
+      <div class="core-content">
+        <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+          <img src="{{ url_for('static', filename='mbanc-m-logo.png') }}" alt="M" class="core-logo" id="core-logo">
+          <div class="core-app-overlay" id="core-app-overlay"></div>
+        </div>
+        <div class="core-sub" id="core-sub"></div>
+        <div class="core-data" id="core-data">
+          <div class="cd"><div class="k">Pipeline</div><div class="v">$487<span class="u">M</span></div></div>
+          <div class="cd"><div class="k">Active Loans</div><div class="v" id="active-loan-count">{{ active_loans if active_loans is not none else '—' }}</div></div>
+          <div class="cd"><div class="k">Avg Rate</div><div class="v down">6.75<span class="u">%</span></div></div>
+          <div class="cd"><div class="k">Pull-Thru</div><div class="v up">97<span class="u">%</span></div></div>
+        </div>
       </div>
     </div>
 
@@ -995,7 +1033,7 @@
 
   // ═══ DEFAULT CORE STATE ═══
   const defaultState = {
-    title: '{{ brand.brand.full_name if brand and brand.brand else "Mortgage Bank of California" }}',
+    isDefault: true,
     sub: '',
     data: [
       { k: 'Pipeline', v: '$487', u: 'M' },
@@ -1006,21 +1044,30 @@
   };
 
   const core = document.getElementById('core');
-  const coreTitle = document.getElementById('core-title');
+  const coreLogo = document.getElementById('core-logo');
+  const coreOverlay = document.getElementById('core-app-overlay');
   const coreSub = document.getElementById('core-sub');
   const coreData = document.getElementById('core-data');
 
   function renderCore(state) {
-    coreTitle.style.opacity = 0;
     coreSub.style.opacity = 0;
     coreData.style.opacity = 0;
+    if (state.isDefault) {
+      // Default: show M logo, hide overlay
+      coreLogo.classList.remove('blurred');
+      coreOverlay.classList.remove('visible');
+      coreOverlay.textContent = '';
+    } else {
+      // App hover: blur M, show app name overlay
+      coreLogo.classList.add('blurred');
+      coreOverlay.textContent = state.title;
+      coreOverlay.classList.add('visible');
+    }
     setTimeout(() => {
-      coreTitle.textContent = state.title;
-      coreSub.textContent = state.sub;
+      coreSub.textContent = state.sub || '';
       coreData.innerHTML = state.data.map(d =>
         '<div class="cd"><div class="k">' + d.k + '</div><div class="v ' + (d.cls||'') + '">' + d.v + (d.u ? '<span class="u">' + d.u + '</span>' : '') + '</div></div>'
       ).join('');
-      coreTitle.style.opacity = 1;
       coreSub.style.opacity = 1;
       coreData.style.opacity = 1;
     }, 150);
@@ -1030,6 +1077,7 @@
   document.querySelectorAll('.node').forEach(node => {
     node.addEventListener('mouseenter', () => {
       renderCore({
+        isDefault: false,
         title: node.dataset.name,
         sub: node.dataset.sub,
         data: [
