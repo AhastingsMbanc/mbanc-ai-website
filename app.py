@@ -5,6 +5,9 @@ Main dashboard for all mbanc.ai applications.
 Reads the shared session cookie from auth.mbanc.ai.
 If not authenticated, shows login overlay on top of dashboard.
 
+Now serves a Vite/React SPA frontend.
+Flask handles API routes; all other paths serve the SPA.
+
 CRITICAL: Must share the same SECRET_KEY as auth.mbanc.ai.
 """
 
@@ -12,7 +15,9 @@ import os
 import json
 import requests as http_requests
 from datetime import timedelta
-from flask import Flask, session, redirect, request, render_template, jsonify
+from pathlib import Path
+
+from flask import Flask, session, redirect, request, jsonify, send_from_directory
 
 
 def _load_brand_config():
@@ -29,7 +34,13 @@ def _load_brand_config():
 
 BRAND = _load_brand_config()
 
-app = Flask(__name__)
+# ── Paths ──
+APP_DIR = Path(__file__).resolve().parent
+# In Docker: frontend built to /app/static_dist
+# In dev: webapp/frontend/dist relative to project root
+FRONTEND_DIST = Path(os.environ.get('FRONTEND_DIST', str(APP_DIR / 'webapp' / 'frontend' / 'dist')))
+
+app = Flask(__name__, static_folder=None)
 app.secret_key = os.environ.get("SECRET_KEY", "mbanc-auth-dev-key")
 app.config["SESSION_COOKIE_NAME"] = "mbanc_session"
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
@@ -39,14 +50,36 @@ app.config["SESSION_COOKIE_DOMAIN"] = os.environ.get("SESSION_COOKIE_DOMAIN", ".
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=12)
 
 AUTH_URL = os.environ.get("AUTH_URL", "https://auth.mbanc.ai")
-AUTH_INTERNAL_URL = os.environ.get("AUTH_INTERNAL_URL", AUTH_URL)  # Docker-internal for proxy calls
+AUTH_INTERNAL_URL = os.environ.get("AUTH_INTERNAL_URL", AUTH_URL)
 DASHBOARD_URL = os.environ.get("DASHBOARD_URL", "https://mbanc.ai")
-PP_INTERNAL_URL = os.environ.get("PP_INTERNAL_URL", "http://pricing-professor:5050")  # PricingProfessor on mbanc-net
+PP_INTERNAL_URL = os.environ.get("PP_INTERNAL_URL", "http://pricing-professor:5050")
 
+
+# ═══════════════════════════════════════════════════
+#  API Routes
+# ═══════════════════════════════════════════════════
 
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"}), 200
+
+
+@app.route("/api/me", methods=["GET"])
+def api_me():
+    """Return current user session info for the React SPA."""
+    if "user_id" not in session:
+        return jsonify({"user": None}), 200
+    return jsonify({
+        "user": {
+            "user_id": session.get("user_id", ""),
+            "email": session.get("email", ""),
+            "username": session.get("username", ""),
+            "role": session.get("role", "lo"),
+            "display_name": session.get("display_name", ""),
+            "first_name": session.get("first_name", ""),
+            "last_name": session.get("last_name", ""),
+        }
+    }), 200
 
 
 @app.route("/api/auth/login", methods=["POST"])
@@ -115,28 +148,27 @@ def proxy_rate_sheet_update():
     return jsonify({"latest_utc": None}), 502
 
 
-@app.route("/")
-def index():
-    """Always render dashboard — login overlay shows if not authenticated."""
-    authenticated = "user_id" in session
-    active_loans = _fetch_active_loan_count()
-    rate_sheet_utc = _fetch_rate_sheet_update()
-    return render_template(
-        "dashboard.html",
-        user=session if authenticated else {},
-        auth_url=AUTH_URL,
-        rate_sheet_utc=rate_sheet_utc,
-        brand=BRAND,
-        authenticated=authenticated,
-        active_loans=active_loans,
-    )
-
-
 @app.route("/logout")
 def logout():
-    """Clear session and reload dashboard (overlay will appear)."""
+    """Clear session and redirect to root (auth overlay will appear)."""
     session.clear()
     return redirect("/")
+
+
+# ═══════════════════════════════════════════════════
+#  SPA Serving — Vite/React frontend
+# ═══════════════════════════════════════════════════
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_spa(path):
+    """Serve React SPA — static assets from Vite build, or index.html for routes."""
+    # Try to serve static file first
+    full_path = FRONTEND_DIST / path
+    if path and full_path.is_file():
+        return send_from_directory(str(FRONTEND_DIST), path)
+    # Fall back to index.html for client-side routing
+    return send_from_directory(str(FRONTEND_DIST), "index.html")
 
 
 if __name__ == "__main__":

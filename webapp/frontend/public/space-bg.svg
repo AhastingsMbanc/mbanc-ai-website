@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Navy-to-orange sunrise gradient -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%"   stop-color="#020a18"/>
+      <stop offset="30%"  stop-color="#04122a"/>
+      <stop offset="55%"  stop-color="#081a3a"/>
+      <stop offset="72%"  stop-color="#1a2040"/>
+      <stop offset="82%"  stop-color="#3a1820"/>
+      <stop offset="90%"  stop-color="#7a2810"/>
+      <stop offset="96%"  stop-color="#b83a08"/>
+      <stop offset="100%" stop-color="#ff3300"/>
+    </linearGradient>
+
+    <!-- Sunrise glow — bottom-right warm wash -->
+    <radialGradient id="sunGlow" cx="85%" cy="95%" r="50%">
+      <stop offset="0%"  stop-color="#ff3300" stop-opacity="0.3"/>
+      <stop offset="40%" stop-color="#cc2200" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#801500" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Star glow filter -->
+    <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft ring glow -->
+    <filter id="ringGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ═══ SKY GRADIENT ═══ -->
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#sunGlow)"/>
+
+  <!-- ═══ STAR FIELD ═══ -->
+  <g filter="url(#starGlow)" opacity="0.7">
+    <circle cx="120" cy="80" r="1.5" fill="#ff9050"/>
+    <circle cx="340" cy="150" r="1" fill="#ff8040"/>
+    <circle cx="580" cy="60" r="1.8" fill="#ffb070"/>
+    <circle cx="750" cy="200" r="1" fill="#ff9050"/>
+    <circle cx="950" cy="45" r="1.3" fill="#ff9050"/>
+    <circle cx="1150" cy="120" r="1.5" fill="#ffb070"/>
+    <circle cx="1350" cy="80" r="1" fill="#ff9050"/>
+    <circle cx="1550" cy="170" r="1.2" fill="#ff8040"/>
+    <circle cx="1750" cy="60" r="1" fill="#ffb070"/>
+    <circle cx="200" cy="320" r="1" fill="#ff9050"/>
+    <circle cx="450" cy="380" r="1.5" fill="#ffb070"/>
+    <circle cx="680" cy="420" r="0.8" fill="#ff9050"/>
+    <circle cx="100" cy="550" r="1.2" fill="#ffb070"/>
+    <circle cx="350" cy="600" r="1" fill="#ff9050"/>
+    <circle cx="550" cy="520" r="1.5" fill="#ff8040"/>
+    <circle cx="800" cy="650" r="0.8" fill="#ffb070"/>
+    <circle cx="1000" cy="350" r="1.3" fill="#ff9050"/>
+    <circle cx="1200" cy="450" r="1" fill="#ffb070"/>
+    <circle cx="1100" cy="600" r="1.5" fill="#ff9050"/>
+    <circle cx="250" cy="800" r="1" fill="#ffb070"/>
+    <circle cx="500" cy="750" r="1.2" fill="#ff9050"/>
+    <circle cx="150" cy="950" r="0.8" fill="#ff8040"/>
+    <circle cx="650" cy="900" r="1" fill="#ffb070"/>
+    <circle cx="850" cy="850" r="1.5" fill="#ff9050"/>
+    <circle cx="1050" cy="780" r="1" fill="#ffb070"/>
+  </g>
+
+  <!-- Dim stars -->
+  <g opacity="0.3">
+    <circle cx="60" cy="180" r="0.6" fill="#a06030"/>
+    <circle cx="180" cy="240" r="0.5" fill="#a06030"/>
+    <circle cx="290" cy="50" r="0.7" fill="#a06030"/>
+    <circle cx="420" cy="280" r="0.5" fill="#a06030"/>
+    <circle cx="510" cy="170" r="0.6" fill="#a06030"/>
+    <circle cx="630" cy="310" r="0.5" fill="#a06030"/>
+    <circle cx="770" cy="100" r="0.7" fill="#a06030"/>
+    <circle cx="880" cy="260" r="0.5" fill="#a06030"/>
+    <circle cx="1020" cy="190" r="0.6" fill="#a06030"/>
+    <circle cx="1180" cy="280" r="0.5" fill="#a06030"/>
+    <circle cx="1280" cy="170" r="0.7" fill="#a06030"/>
+    <circle cx="1420" cy="250" r="0.5" fill="#a06030"/>
+    <circle cx="1560" cy="90" r="0.6" fill="#a06030"/>
+    <circle cx="1680" cy="300" r="0.5" fill="#a06030"/>
+    <circle cx="1820" cy="190" r="0.7" fill="#a06030"/>
+    <circle cx="70" cy="450" r="0.5" fill="#a06030"/>
+    <circle cx="240" cy="500" r="0.6" fill="#a06030"/>
+    <circle cx="400" cy="470" r="0.5" fill="#a06030"/>
+    <circle cx="560" cy="650" r="0.7" fill="#a06030"/>
+    <circle cx="720" cy="550" r="0.5" fill="#a06030"/>
+    <circle cx="900" cy="500" r="0.6" fill="#a06030"/>
+    <circle cx="1050" cy="520" r="0.5" fill="#a06030"/>
+    <circle cx="1250" cy="680" r="0.7" fill="#a06030"/>
+    <circle cx="1400" cy="550" r="0.5" fill="#a06030"/>
+    <circle cx="130" cy="700" r="0.6" fill="#a06030"/>
+    <circle cx="310" cy="680" r="0.5" fill="#a06030"/>
+    <circle cx="470" cy="850" r="0.7" fill="#a06030"/>
+    <circle cx="750" cy="780" r="0.5" fill="#a06030"/>
+    <circle cx="950" cy="920" r="0.6" fill="#a06030"/>
+    <circle cx="1150" cy="880" r="0.5" fill="#a06030"/>
+    <circle cx="1350" cy="950" r="0.7" fill="#a06030"/>
+    <circle cx="1600" cy="400" r="0.5" fill="#a06030"/>
+    <circle cx="1750" cy="520" r="0.6" fill="#a06030"/>
+    <circle cx="1850" cy="700" r="0.5" fill="#a06030"/>
+    <circle cx="1700" cy="850" r="0.7" fill="#a06030"/>
+    <circle cx="1500" cy="750" r="0.5" fill="#a06030"/>
+  </g>
+
+  <!-- ═══ THIN ORBITAL RINGS — sweep across the entire page ═══ -->
+  <!-- Origin point bottom-right, rings extend far past left edge -->
+  <g filter="url(#ringGlow)">
+    <!-- Ring 1 — widest, spans full page and beyond -->
+    <ellipse cx="1750" cy="1050" rx="2200" ry="380"
+             fill="none" stroke="rgba(255,160,70,0.07)" stroke-width="0.8"
+             transform="rotate(-12, 1750, 1050)"/>
+
+    <!-- Ring 2 -->
+    <ellipse cx="1750" cy="1050" rx="1900" ry="320"
+             fill="none" stroke="rgba(255,140,50,0.09)" stroke-width="0.7"
+             transform="rotate(-10, 1750, 1050)"/>
+
+    <!-- Ring 3 -->
+    <ellipse cx="1750" cy="1050" rx="1600" ry="270"
+             fill="none" stroke="rgba(255,120,40,0.1)" stroke-width="0.8"
+             transform="rotate(-8, 1750, 1050)"/>
+
+    <!-- Ring 4 -->
+    <ellipse cx="1750" cy="1050" rx="1300" ry="220"
+             fill="none" stroke="rgba(255,140,50,0.08)" stroke-width="0.6"
+             transform="rotate(-7, 1750, 1050)"/>
+
+    <!-- Ring 5 -->
+    <ellipse cx="1750" cy="1050" rx="1050" ry="175"
+             fill="none" stroke="rgba(255,160,60,0.11)" stroke-width="0.7"
+             transform="rotate(-5, 1750, 1050)"/>
+
+    <!-- Ring 6 — inner -->
+    <ellipse cx="1750" cy="1050" rx="800" ry="130"
+             fill="none" stroke="rgba(255,130,40,0.09)" stroke-width="0.6"
+             transform="rotate(-4, 1750, 1050)"/>
+
+    <!-- Ring 7 — tightest -->
+    <ellipse cx="1750" cy="1050" rx="550" ry="90"
+             fill="none" stroke="rgba(255,170,70,0.12)" stroke-width="0.7"
+             transform="rotate(-3, 1750, 1050)"/>
+  </g>
+
+  <!-- Small dots sitting on the rings — satellites / debris -->
+  <g filter="url(#starGlow)">
+    <circle cx="180" cy="610" r="2.5" fill="#ff9050" opacity="0.4"/>
+    <circle cx="480" cy="680" r="2" fill="#ff8040" opacity="0.35"/>
+    <circle cx="820" cy="740" r="1.8" fill="#c8d0e0" opacity="0.3"/>
+    <circle cx="1150" cy="800" r="2.2" fill="#ff9050" opacity="0.35"/>
+  </g>
+</svg>
